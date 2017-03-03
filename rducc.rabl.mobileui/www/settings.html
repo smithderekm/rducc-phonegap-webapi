@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Report a Broken Light | Settings</title>
+</head>
+<body>
+    <div data-role="page" id="settingsPage">
+        <header data-role="header" data-theme="b" style="text-align: center;">
+            <a href="#homePage" data-icon="home" data-iconpos="notext">Home</a>
+            <img src="img/rabl.png" />
+        </header>
+
+        <div id="settingsForm" style="width: 80%; margin: 0 auto; padding-top: 50px;">
+            <div data-role="fieldcontain">
+                <label for="dataApiUrl">Data API Url Base</label>
+                <input type="url" id="dataApiUrl" required="required" placeholder="http://rabl.com/api/outagereport" />
+            </div>
+            <!--<div data-role="fieldcontain">
+                <label for="authApiUrl">Auth API Url Base</label>
+                <input type="url" id="authApiUrl" required="required" placeholder="http://rabl.com/api/account" />
+            </div>-->
+            <div data-role="buttongroup" data-type="horizontal">
+                <a data-role="button" onclick="goBack()" href="#" data-icon="arrow-l">Cancel</a>
+                <input type="submit" id="submitSettingsForm" value="Save" data-icon="check" onclick="SaveSettings()" />
+            </div>
+
+        </div>
+
+        <footer data-role="footer" data-position="fixed" style="text-align: center;">Copyright &copy; 2013 Derek Smith</footer>
+
+        <script type="text/javascript">
+            $(document).delegate("#settingsPage", "pageshow", function () { LoadPage() });
+
+
+            function LoadPage() {
+                if (sessionStorage) {
+                    if (sessionStorage["baseUri"])
+                        $("#dataApiUrl").val(sessionStorage["baseUri"]);
+                    else
+                        $('#dataApiUrl').val('http://localhost/rducc.rabl.webapi/api');
+
+                    if (sessionStorage["authUri"])
+                        $("#authApiUrl").val(sessionStorage["authUri"]);
+                    else
+                        $('#authApiUrl').val('http://localhost/rducc.rabl.webapi/api');
+
+                }
+                else {
+                    $('#dataApiUrl').val('http://localhost/rducc.rabl.webapi/api');
+                    $('#authApiUrl').val('http://localhost/rducc.rabl.webapi/api');
+                }
+            }
+            function SaveSettings() {
+                if (sessionStorage) {
+                    sessionStorage["baseUri"] = $("#dataApiUrl").val();
+                    sessionStorage["authUri"] = $("#authApiUrl").val();
+                }
+
+                goBack();
+            }
+
+            function goBack() {
+                history.back();
+            }
+
+        </script>
+    </div>
+</body>
+</html>
